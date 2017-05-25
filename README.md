@@ -32,7 +32,8 @@ server {
     listen       xxx.xxx.xxx.xxx;
     server_name  hello.xxx.com ;
     index index.php index.html index.htm;
-    root /your-path/yaf-init/public/hello/;                                                                                                                                                       
+    root /your-path/yaf-init/public/hello/;
+    
     location / {   
         try_files $uri $uri/ /index.php?$query_string;
     }
