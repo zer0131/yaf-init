@@ -1,12 +1,12 @@
 # Yaf Init
 
-## 简介
+## 一、简介
 
 用于初始化基于Yaf的项目
 
 [Yaf手册](http://www.laruence.com/manual/index.html)
 
-## Yaf基础配置
+## 二、Yaf基础配置
 
 名称|值|备注
 -|-|-
@@ -23,9 +23,9 @@ yaf.use_spl_autoload|0|N/A
 
 [详细配置说明](http://php.net/manual/zh/yaf.configuration.php)
 
-## Nginx配置
+## 三、Nginx配置
 
-### 一个域名一个项目配置示例
+### 1、单域名单项目配置示例
 
 ```
 server {
@@ -66,7 +66,7 @@ $app = Fx_Init::init('hello');//这里传入项目名称
 $app->bootstrap()->run();
 ```
 
-### 同域名下多项目部署配置示例
+### 2、单域名多项目配置示例
 
 ```
 server {
