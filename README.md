@@ -28,7 +28,7 @@ yaf.use_spl_autoload|0|N/A
 ### 2、项目配置
 
 名称|是否必须|类型|默认值|说明
--|-|-|-
+-|-|-|-|-
 application.directory|Yes|String|N/A|应用绝对目录路径
 application.ext|No|String|php|PHP脚本的扩展名
 application.bootstrap|No|String|Bootstrapplication.php|Bootstrap路径(绝对路径)
