@@ -6,7 +6,9 @@
 
 [Yaf手册](http://www.laruence.com/manual/index.html)
 
-## 二、Yaf基础配置
+## 二、Yaf配置
+
+### 1、PHP INI配置
 
 名称|值|备注
 -|-|-
@@ -22,6 +24,25 @@ yaf.use_namespace|0|N/A
 yaf.use_spl_autoload|0|N/A
 
 [详细配置说明](http://php.net/manual/zh/yaf.configuration.php)
+
+### 2、项目配置
+
+名称|是否必须|类型|默认值|说明
+-|-|-|-
+application.directory|Yes|String|N/A|应用绝对目录路径
+application.ext|No|String|php|PHP脚本的扩展名
+application.bootstrap|No|String|Bootstrapplication.php|Bootstrap路径(绝对路径)
+application.library|No|String|application.directory + "/library"|本地(自身)类库的绝对目录地址
+application.baseUri|No|String|null|在路由中, 需要忽略的路径前缀, 一般不需要设置, Yaf会自动判断
+application.dispatcher.defaultModule|No|String|Index|默认的模块
+application.dispatcher.defaultController|No|String|Index|默认控制器
+application.dispatcher.defaultAction|No|String|index|默认动作
+application.dispatcher.throwException|No|Bool|true|在出错的时候, 是否抛出异常
+application.dispatcher.catchException|No|Bool|false|是否使用默认的异常捕获Controller, 如果开启, 在有未捕获的异常的时候, 控制权会交给ErrorController的errorAction方法, 可以通过$request->getException()获得此异常对象
+application.view.ext|No|String|phtml|视图模板扩展名
+application.modules|No|String|Index|声明存在的模块名, 请注意, 如果你要定义这个值, 一定要定义Index Module
+application.system.*|No|String|*|通过这个属性, 可以修改yaf的runtime configure, 比如application.system.lowcase_path, 但是请注意只有PHP_INI_ALL的配置项才可以在这里被修改, 此选项从2.2.0开始引入
+
 
 ## 三、Nginx配置
 
