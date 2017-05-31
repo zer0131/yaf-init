@@ -6,7 +6,7 @@
  */
 class Bootstrap extends Yaf_Bootstrap_Abstract {
     public function _initErrorHandler() {
-        //
+        Fx_ErrorHandler::registerErrorHandler();
     }
 
     public function _initRequest(Yaf_Dispatcher $dispatcher){
