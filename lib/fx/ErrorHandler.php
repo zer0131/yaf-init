@@ -18,10 +18,6 @@ class Fx_ErrorHandler {
 
     public function __construct() {
         $this->_logPath = LOG_PATH . '/php-error.log';
-        /*if (!is_file($this->_logPath)) {
-            var_dump(file_put_contents($this->_logPath, ''));
-            exit;
-        }*/
     }
 
     public static function registerErrorHandler() {
@@ -48,7 +44,7 @@ class Fx_ErrorHandler {
     public function handleError($code, $message, $file = '', $line = 0) {
         if (error_reporting() & $code) {
             $level = self::_codeToString($code);
-            $logid = '';//Fx_Log::genLogID();
+            $logid = REQUEST_ID;
             $str = "PHP {$level}: logid: {$logid} {$message} in {$file} on {$line}";
             error_log($str, self::MESSAGE_TYPE, $this->_logPath);
         }
@@ -58,7 +54,7 @@ class Fx_ErrorHandler {
     public function handleFatal() {
         $lastError = error_get_last();
         if ($lastError && in_array($lastError['type'], $this->_errorCode)) {
-            $logid = '';//Fx_Log::genLogID();
+            $logid = REQUEST_ID;
             $str = "PHP Fatal: logid: {$logid} {$lastError['message']} in {$lastError['file']} on {$lastError['line']}";
             error_log($str, self::MESSAGE_TYPE, $this->_logPath);
         }

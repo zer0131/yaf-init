@@ -51,7 +51,7 @@ class Fx_AppEnv {
         $env = '';
         switch ($key) {
             case 'conf':
-                $env = CONF_PATH . "/app/$curApp";
+                $env = APP_PATH . "/$curApp/conf";
                 break;
 
             case 'data':
