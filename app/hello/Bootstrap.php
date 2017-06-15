@@ -9,13 +9,13 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
         Fx_ErrorHandler::registerErrorHandler();
     }
 
-    public function _initRequest(Yaf_Dispatcher $dispatcher){
+    public function _initRequest(Yaf_Dispatcher $dispatcher) {
         $request = $dispatcher->getRequest();
         define('IS_GET', $request->isGet() ? true : false);
         define('IS_POST', $request->isPost() ? true : false);
         define('IS_PUT', $request->isPut() ? true : false);
-        define('IS_DELETE', $request->getMethod() =='DELETE' ? true : false);
-        define('IS_AJAX', $request->isXmlHttpRequest() ? true : false );
+        define('IS_DELETE', $request->getMethod() == 'DELETE' ? true : false);
+        define('IS_AJAX', $request->isXmlHttpRequest() ? true : false);
         define('IS_CLI', $request->isCli() ? true : false);
     }
 
