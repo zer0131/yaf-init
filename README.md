@@ -145,3 +145,5 @@ server {
     access_log  /your-path/nginx/logs/yaf-init.log;
 }
 ```
+
+## 四、目录结构
