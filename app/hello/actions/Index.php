@@ -7,6 +7,6 @@
 class Action_Index extends Yaf_Action_Abstract {
 
     public function execute() {
-        dumper('index');
+        dumper(Service_Page_Index_Index::instance()->testPage());
     }
 }

@@ -45,7 +45,7 @@ class Fx_ErrorHandler {
         if (error_reporting() & $code) {
             $level = self::_codeToString($code);
             $logid = REQUEST_ID;
-            $str = "PHP {$level}: logid: {$logid} {$message} in {$file} on {$line}";
+            $str = "PHP {$level}: logid: {$logid} {$message} in {$file} on {$line}" . PHP_EOL;
             error_log($str, self::MESSAGE_TYPE, $this->_logPath);
         }
     }
@@ -55,7 +55,7 @@ class Fx_ErrorHandler {
         $lastError = error_get_last();
         if ($lastError && in_array($lastError['type'], $this->_errorCode)) {
             $logid = REQUEST_ID;
-            $str = "PHP Fatal: logid: {$logid} {$lastError['message']} in {$lastError['file']} on {$lastError['line']}";
+            $str = "PHP Fatal: logid: {$logid} {$lastError['message']} in {$lastError['file']} on {$lastError['line']}" . PHP_EOL;
             error_log($str, self::MESSAGE_TYPE, $this->_logPath);
         }
     }

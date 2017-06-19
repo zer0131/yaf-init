@@ -27,7 +27,8 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
     }
 
     public function _initPlugin(Yaf_Dispatcher $dispatcher) {
-        //
+        $testPlugin = new Plugin_Test();
+        $dispatcher->registerPlugin($testPlugin);
     }
 
     public function _initView(Yaf_Dispatcher $dispatcher) {
