@@ -16,7 +16,6 @@ class Bootstrap extends Yaf_Bootstrap_Abstract {
         define('IS_PUT', $request->isPut() ? true : false);
         define('IS_DELETE', $request->getMethod() == 'DELETE' ? true : false);
         define('IS_AJAX', $request->isXmlHttpRequest() ? true : false);
-        define('IS_CLI', $request->isCli() ? true : false);
     }
 
     public function _initRoute(Yaf_Dispatcher $dispatcher) {
