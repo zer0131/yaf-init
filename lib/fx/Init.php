@@ -55,6 +55,7 @@ class Fx_Init {
         define('LIB_PATH', ROOT_PATH . '/lib');
         define('WEB_ROOT', ROOT_PATH . '/public');
         define('CONF_FILE', 'application.ini');
+        define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
     }
 
     private static function _initAppEnv($appName) {
@@ -84,7 +85,7 @@ class Fx_Init {
 
     private static function _getAppName() {
         $appName = null;
-        if (PHP_SAPI != 'cli') {
+        if (!IS_CLI) {
             $script = explode('/', rtrim($_SERVER['SCRIPT_NAME'], '/'));
             if ($script[2] == 'index.php') {
                 $appName = $script[1];
