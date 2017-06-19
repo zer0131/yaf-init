@@ -1,14 +1,14 @@
 <?php
+
 /**
  * @author ryan
  * @desc 错误处理controller
  */
-
 class Controller_Error extends Yaf_Controller_Abstract {
 
     public function errorAction($exception) {
-        //Fx_Log::warning($exception->getFile() . $exception->getLine() . $exception->getMessage());
-        switch($exception->getCode()) {
+        Fx_Log::warning($exception->getFile() . $exception->getLine() . $exception->getMessage());
+        switch ($exception->getCode()) {
             case Yaf_ERR_LOADFAILD:
             case Yaf_ERR_LOADFAILD_MODULE:
             case Yaf_ERR_LOADFAILD_CONTROLLER:
