@@ -14,14 +14,14 @@
 -|-|-
 yaf.environ|debug|线上产品设置为product
 yaf.library|/your-path/yaf-init/lib|your-path可根据您的实际情况设置，yaf-init也可设置
-yaf.cache_config|0|N/A
-yaf.name_suffix|0|N/A
-yaf.name_separator|_|N/A
+yaf.cache_config|0|是否缓存配置文件(只针对INI配置文件生效), 打开此选项可在复杂配置的情况下提高性能
+yaf.name_suffix|0|在处理Controller, Action, Plugin, Model的时候, 类名中关键信息是否是后缀式, 比如UserModel, 而在前缀模式下则是ModelUser
+yaf.name_separator|_|在处理Controller, Action, Plugin, Model的时候, 前缀和名字之间的分隔符, 默认为空, 也就是UserPlugin, 加入设置为"_", 则判断的依据就会变成:"User_Plugin", 这个主要是为了兼容ST已有的命名规范
 yaf.action_prefer|1|N/A
-yaf.forward_limit|5|N/A
+yaf.forward_limit|5|forward最大嵌套深度
 yaf.lowcase_path|1|N/A
-yaf.use_namespace|0|N/A
-yaf.use_spl_autoload|0|N/A
+yaf.use_namespace|0|开启的情况下, Yaf将会使用命名空间方式注册自己的类, 比如Yaf_Application将会变成Yaf\Application
+yaf.use_spl_autoload|0|开启的情况下, Yaf在加载不成功的情况下, 会继续让PHP的自动加载函数加载, 从性能考虑, 除非特殊情况, 否则保持这个选项关闭
 
 [详细配置说明](http://php.net/manual/zh/yaf.configuration.php)
 
