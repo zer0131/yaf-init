@@ -17,7 +17,7 @@ class Fx_ErrorHandler {
     private $_logPath = '';
 
     public function __construct() {
-        $this->_logPath = LOG_PATH . '/php-error.log';
+        $this->_logPath = LOG_PATH . '/php-error.log.' . date('YmdH', time());
     }
 
     public static function registerErrorHandler() {
