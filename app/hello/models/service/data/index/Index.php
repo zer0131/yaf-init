@@ -4,8 +4,9 @@
  * @desc data index
  */
 
-class Service_Data_Index_Index extends Fx_Base {
+class Service_Data_Index_Index {
+    use \Fx\Traits\Instance;
     public function testData() {
-        return Dao_Index_Index::instance()->getData();
+        return Dao_Index_Index::getInstance()->getData();
     }
 }

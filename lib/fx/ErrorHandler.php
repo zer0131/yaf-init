@@ -4,7 +4,9 @@
  * @author ryan
  * @desc 错误处理
  */
-class Fx_ErrorHandler {
+
+namespace Fx;
+class ErrorHandler {
     private $_errorCode = array(
         E_ERROR,
         E_PARSE,

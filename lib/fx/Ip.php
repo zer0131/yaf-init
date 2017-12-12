@@ -4,7 +4,8 @@
  * @desc Ip地址操作类
  */
 
-class Fx_Ip {
+namespace Fx;
+class Ip {
 
     public static function getClientIp() {
         $uip = '';

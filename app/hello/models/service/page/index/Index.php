@@ -4,8 +4,9 @@
  * @desc page index
  */
 
-class Service_Page_Index_Index  extends Fx_Base {
+class Service_Page_Index_Index {
+    use \Fx\Traits\Instance;
     public function testPage() {
-        return Service_Data_Index_Index::instance()->testData();
+        return Service_Data_Index_Index::getInstance()->testData();
     }
 }

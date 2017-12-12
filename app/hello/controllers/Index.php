@@ -4,7 +4,7 @@
  * @desc 默认控制器
  */
 
-class Controller_Index extends Yaf_Controller_Abstract {
+class Controller_Index extends \Yaf\Controller_Abstract {
 
     public $actions = array(
         'index' => 'actions/Index.php',

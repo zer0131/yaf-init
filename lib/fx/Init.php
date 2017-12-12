@@ -4,7 +4,8 @@
  * @author ryan
  * @desc 项目是初始化类
  */
-class Fx_Init {
+namespace Fx;
+class Init {
     private static $_isInit = false;
 
     /**
@@ -42,7 +43,7 @@ class Fx_Init {
         //引入composer机制
         file_exists(__DIR__ . '/../vendor/autoload.php') && require_once __DIR__ . '/../vendor/autoload.php';
 
-        return Yaf_Application::app();
+        return \Yaf\Application::app();
     }
 
     private static function _initBasicEnv() {
@@ -78,7 +79,7 @@ class Fx_Init {
 
         //设置当前App
         require_once LIB_PATH . '/fx/AppEnv.php';
-        Fx_AppEnv::setCurrApp(MAIN_APP);
+        AppEnv::setCurrApp(MAIN_APP);
 
         return true;
     }
@@ -109,16 +110,16 @@ class Fx_Init {
     }
 
     private static function _initYaf() {
-        $confPath = Fx_AppEnv::getEnv('conf');
+        $confPath = AppEnv::getEnv('conf');
 
         !file_exists($confPath . '/' . CONF_FILE) && exit(1);
 
         // 生成Yaf实例
-        $app = new Yaf_Application($confPath . '/' . CONF_FILE);
+        $app = new \Yaf\Application($confPath . '/' . CONF_FILE);
 
-        define('CLIENT_IP', Fx_Ip::getClientIp());
-        define('USER_IP', Fx_Ip::getUserIp());
-        define('FRONTEND_IP', Fx_Ip::getFrontendIp());
+        define('CLIENT_IP', Ip::getClientIp());
+        define('USER_IP', Ip::getUserIp());
+        define('FRONTEND_IP', Ip::getFrontendIp());
         define("MODULE", MAIN_APP);
 
         return true;

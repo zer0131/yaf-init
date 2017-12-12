@@ -4,7 +4,8 @@
  * @author ryan
  * @desc 配置读取
  */
-class Fx_Conf {
+namespace Fx;
+class Conf {
 
     /**
      * 经过封装的获取配置方法
@@ -20,12 +21,12 @@ class Fx_Conf {
         if (!$item) {
             return $default ? $default : null;
         }
-        !$section && $section = Yaf_Application::app()->environ();
-        $confPath = Fx_AppEnv::getEnv('conf', $app) . '/' . CONF_FILE;
+        !$section && $section = \Yaf\Application::app()->environ();
+        $confPath = AppEnv::getEnv('conf', $app) . '/' . CONF_FILE;
         if (!file_exists($confPath)) {
             return $default ? $default : null;
         }
-        $confObj = new Yaf_Config_Ini($confPath, $section);
+        $confObj = new \Yaf\Config\Ini($confPath, $section);
         if (!self::_check(explode('.', $item), $confObj)) {
             return $default ? $default : null;
         }
@@ -40,12 +41,12 @@ class Fx_Conf {
      * 直接获取yaf中的配置对象
      * @param string $section
      * @param string $app
-     * @return Yaf_Config_Ini
+     * @return \Yaf\Config\Ini
      */
     public static function getOriginConf($section = null, $app = null) {
-        !$section && $section = Yaf_Application::app()->environ();
-        $confPath = Fx_AppEnv::getEnv('conf', $app) . '/' . CONF_FILE;
-        return new Yaf_Config_Ini($confPath, $section);
+        !$section && $section = \Yaf\Application::app()->environ();
+        $confPath = AppEnv::getEnv('conf', $app) . '/' . CONF_FILE;
+        return new \Yaf\Config\Ini($confPath, $section);
     }
 
     //校验配置项

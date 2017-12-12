@@ -4,7 +4,8 @@
  * @author ryan
  * @desc app环境设置类
  */
-class Fx_AppEnv {
+namespace Fx;
+class AppEnv {
     private static $_strCurrApp;
     private static $_arrEnv;
 

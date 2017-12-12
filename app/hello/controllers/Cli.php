@@ -4,7 +4,7 @@
  * @desc cli controller
  */
 
-class Controller_Cli extends Yaf_Controller_Abstract {
+class Controller_Cli extends \Yaf\Controller_Abstract {
 
     public $actions = array(
         'script' => 'actions/cli/Script.php',

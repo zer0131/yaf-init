@@ -4,7 +4,8 @@
  * @author ryan
  * @desc 日志操作类
  */
-class Fx_Log {
+namespace Fx;
+class Log {
     const LOG_LEVEL_FATAL = 0x01;
     const LOG_LEVEL_WARNING = 0x02;
     const LOG_LEVEL_NOTICE = 0x04;
@@ -71,7 +72,7 @@ class Fx_Log {
         empty($app) && $app = self::getLogPrefix();
 
         if (empty(self::$_arrInstance[$app])) {
-            $logConf = Fx_Conf::getConf('log');
+            $logConf = Conf::getConf('log');
 
             // 生成路径
             $logPath = self::getLogPath();
@@ -123,7 +124,7 @@ class Fx_Log {
                 //'format_pb' => $formatPb,
             );
 
-            self::$_arrInstance[$app] = new Fx_Log($conf);
+            self::$_arrInstance[$app] = new Log($conf);
         }
 
         return self::$_arrInstance[$app];
@@ -135,7 +136,7 @@ class Fx_Log {
      **/
     public static function getLogPrefix() {
         if (defined('IS_FOX') && IS_FOX == true) {
-            return Fx_AppEnv::getCurrApp();
+            return AppEnv::getCurrApp();
         }
         if (defined('MODULE')) {
             return MODULE;
@@ -152,7 +153,7 @@ class Fx_Log {
             return LOG_PATH;
         }
         if (self::$_strLogPath === null) {
-            $ret = Fx_Conf::getConf('log.log_path');
+            $ret = Conf::getConf('log.log_path');
             if ($ret) {
                 self::$_strLogPath = $ret;
             } else {
@@ -172,7 +173,7 @@ class Fx_Log {
             return DATA_PATH;
         }
         if (self::$_strDataPath === null) {
-            $ret = Fx_Conf::getConf('log.data_path');
+            $ret = Conf::getConf('log.data_path');
             if ($ret) {
                 self::$_strDataPath = $ret;
             } else {
@@ -210,7 +211,7 @@ class Fx_Log {
 
     // 获取客户端ip
     public static function getClientIp() {
-        return Fx_Ip::getClientIp();
+        return Ip::getClientIp();
     }
 
     public static function flattenArgs($args) {
@@ -284,7 +285,7 @@ class Fx_Log {
             $param = $matches[1][$i];
             switch ($code) {
                 case 'h':
-                    $action[] = "(defined('CLIENT_IP')? CLIENT_IP : Fx_Log::getClientIp())";
+                    $action[] = "(defined('CLIENT_IP')? CLIENT_IP : \Fx\Log::getClientIp())";
                     break;
                 case 't':
                     $action[] = ($param == '') ? "strftime('%y-%m-%d %H:%M:%S')" : "strftime(" . var_export($param, true) . ")";
@@ -295,7 +296,7 @@ class Fx_Log {
                     $action[] = "(isset(\$_SERVER[$key])? \$_SERVER[$key] : '')";
                     break;
                 case 'a':
-                    $action[] = "(defined('CLIENT_IP')? CLIENT_IP : Fx_Log::getClientIp())";
+                    $action[] = "(defined('CLIENT_IP')? CLIENT_IP : \Fx\Log::getClientIp())";
                     break;
                 case 'A':
                     $action[] = "(isset(\$_SERVER['SERVER_ADDR'])? \$_SERVER['SERVER_ADDR'] : '')";
@@ -316,7 +317,7 @@ class Fx_Log {
                     $action[] = "((getenv($param) !== false)? getenv($param) : '')";
                     break;
                 case 'f':
-                    $action[] = 'Fx_Log::$currentInstance->currentFile';
+                    $action[] = '\Fx\Log::$currentInstance->currentFile';
                     break;
                 case 'H':
                     $action[] = "(isset(\$_SERVER['SERVER_PROTOCOL'])? \$_SERVER['SERVER_PROTOCOL'] : '')";
@@ -352,30 +353,34 @@ class Fx_Log {
                     $action[] = "(isset(\$_SERVER['HTTP_HOST'])? \$_SERVER['HTTP_HOST'] : '')";
                     break;
                 case 'L':
-                    $action[] = 'Fx_Log::$currentInstance->currentLogLevel';
+                    $action[] = '\Fx\Log::$currentInstance->currentLogLevel';
                     break;
                 case 'N':
-                    $action[] = 'Fx_Log::$currentInstance->currentLine';
+                    $action[] = '\Fx\Log::$currentInstance->currentLine';
                     break;
                 case 'E':
-                    $action[] = 'Fx_Log::$currentInstance->currentErrNo';
+                    $action[] = '\Fx\Log::$currentInstance->currentErrNo';
                     break;
                 case 'l':
-                    $action[] = "Fx_Log::genLogID()";
+                    $action[] = "\Fx\Log::genLogID()";
                     break;
                 case 'u':
-                    //用户信息以后处理...
-                    $action[] = 'N/A';
+                    /*if (!isset($prelimDone['user'])) {
+                        $prelim[] = '$____user____ = Sf_Passport::getUserInfoFromCookie();';
+                        $prelimDone['user'] = true;
+                    }
+                    $action[] = "((defined('CLIENT_IP') ? CLIENT_IP: Sf_Log::getClientIp()) . ' ' . \$____user____['uid'] . ' ' . \$____user____['uname'])";*/
+                    $action[] = "defined('CLIENT_IP') ? CLIENT_IP: \Fx\Log::getClientIp()";
                     break;
                 case 'S':
                     if ($param == '') {
-                        $action[] = 'Fx_Log::$currentInstance->getStrArgs()';
+                        $action[] = '\Fx\Log::$currentInstance->getStrArgs()';
                     } else {
                         $paramName = var_export($param, true);
                         if (!isset($prelimDone['S_' . $paramName])) {
-                            $prelim[] = "if (isset(Fx_Log::\$currentInstance->currentArgs[$paramName])) {
-                                    \$____curargs____[$paramName] = Fx_Log::\$currentInstance->currentArgs[$paramName];
-                                    unset(Fx_Log::\$currentInstance->currentArgs[$paramName]);
+                            $prelim[] = "if (isset(\Fx\Log::\$currentInstance->currentArgs[$paramName])) {
+                                    \$____curargs____[$paramName] = \Fx\Log::\$currentInstance->currentArgs[$paramName];
+                                    unset(\Fx\Log::\$currentInstance->currentArgs[$paramName]);
                                 } else \$____curargs____[$paramName] = '';";
                             $prelimDone['S_' . $paramName] = true;
                         }
@@ -383,7 +388,7 @@ class Fx_Log {
                     }
                     break;
                 case 'M':
-                    $action[] = 'Fx_Log::$currentInstance->currentErrMsg';
+                    $action[] = '\Fx\Log::$currentInstance->currentErrMsg';
                     break;
                 case 'x':
                     $needUrlencode = false;
@@ -393,40 +398,40 @@ class Fx_Log {
                     }
                     switch ($param) {
                         case 'log_level':
-                            $action[] = 'Fx_Log::$currentInstance->currentLogLevel';
+                            $action[] = '\Fx\Log::$currentInstance->currentLogLevel';
                             break;
                         case 'line':
-                            $action[] = 'Fx_Log::$currentInstance->currentLine';
+                            $action[] = '\Fx\Log::$currentInstance->currentLine';
                             break;
                         case 'class':
-                            $action[] = 'Fx_Log::$currentInstance->currentClass';
+                            $action[] = '\Fx\Log::$currentInstance->currentClass';
                             break;
                         case 'function':
-                            $action[] = 'Fx_Log::$currentInstance->currentFunction';
+                            $action[] = '\Fx\Log::$currentInstance->currentFunction';
                             break;
                         case 'err_no':
-                            $action[] = 'Fx_Log::$currentInstance->currentErrNo';
+                            $action[] = '\Fx\Log::$currentInstance->currentErrNo';
                             break;
                         case 'err_msg':
-                            $action[] = 'Fx_Log::$currentInstance->currentErrMsg';
+                            $action[] = '\Fx\Log::$currentInstance->currentErrMsg';
                             break;
                         case 'log_id':
-                            $action[] = "Fx_Log::genLogID()";
+                            $action[] = "\Fx\Log::genLogID()";
                             break;
                         case 'app':
-                            $action[] = "Fx_Log::getLogPrefix()";
+                            $action[] = "\Fx\Log::getLogPrefix()";
                             break;
                         case 'function_param':
-                            $action[] = 'Fx_Log::flattenArgs(Fx_Log::$currentInstance->currentFunctionParam)';
+                            $action[] = '\Fx\Log::flattenArgs(\Fx\Log::$currentInstance->currentFunctionParam)';
                             break;
                         case 'argv':
-                            $action[] = '(isset($GLOBALS["argv"])? Fx_Log::flattenArgs($GLOBALS["argv"]) : \'\')';
+                            $action[] = '(isset($GLOBALS["argv"])? \Fx\Log::flattenArgs($GLOBALS["argv"]) : \'\')';
                             break;
                         case 'pid':
                             $action[] = 'posix_getpid()';
                             break;
                         case 'encoded_str_array':
-                            $action[] = 'Fx_Log::$currentInstance->getStrArgsStd()';
+                            $action[] = '\Fx\Log::$currentInstance->getStrArgsStd()';
                             break;
                         case 'cookie':
                             $action[] = "(isset(\$_SERVER['HTTP_COOKIE'])? \$_SERVER['HTTP_COOKIE'] : '')";
@@ -536,7 +541,7 @@ class Fx_Log {
         return self::getInstance()->_writeLog(self::LOG_LEVEL_FATAL, $str, $errno, $arrArgs, $depth + 1);
     }
 
-    private function _writeLog($intLevel, $str, $errno = 0, $arrArgs = null, $depth = 0, $filenameSuffix = '', $logFormat = null) {
+    public function _writeLog($intLevel, $str, $errno = 0, $arrArgs = null, $depth = 0, $filenameSuffix = '', $logFormat = null) {
         if ($intLevel > $this->intLevel || !isset(self::$arrLogLevels[$intLevel])) {
             return false;
         }

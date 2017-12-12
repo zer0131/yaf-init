@@ -4,7 +4,7 @@
  * @desc script action
  */
 
-class Action_Script extends Yaf_Action_Abstract {
+class Action_Script extends \Yaf\Action_Abstract {
     public function execute() {
         dumper(IS_CLI);
     }

@@ -6,6 +6,6 @@
 
 ini_set('memory_limit','4096M');
 require_once __DIR__ . "/../../../lib/fx/Init.php";
-$app = Fx_Init::init('hello');
+$app = \Fx\Init::init('hello');
 $app->bootstrap();
-$app->getDispatcher()->dispatch(new Yaf_Request_Simple());
+$app->getDispatcher()->dispatch(new \Yaf\Request\Simple());
